@@ -8,4 +8,10 @@
     - Run pip install Flask in the Terminal (pip uses python so make sure that is installed first)
 
 
+# Recommended Downloads
+    - Github Desktop (makes pushing and pulling a lot easier)
+    - Install the 'flask-snippets' extension by cstrap in VS Code. Search in the Extensions tab or use this link https://marketplace.visualstudio.com/items?itemName=cstrap.flask-snippets
+    
+
+
 
