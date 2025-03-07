@@ -1,6 +1,6 @@
 # Algorithm-Avengers-Web-App
 
-# Make sure to clone
+# Make sure you clone the repository first
 
 # Flask installation
     - Open the path to the repository on your computer 
@@ -11,7 +11,7 @@
 # Recommended Downloads
     - Github Desktop (makes pushing and pulling a lot easier)
     - Install the 'flask-snippets' extension by cstrap in VS Code. Search in the Extensions tab or use this link https://marketplace.visualstudio.com/items?itemName=cstrap.flask-snippets
-    
+
 
 
 
