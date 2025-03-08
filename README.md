@@ -1,11 +1,16 @@
 # Algorithm-Avengers-Web-App
 
-# Make sure you clone the repository first
 
-# Flask installation
-    - Open the path to the repository on your computer 
-    - Open the Terminal (shortcut in Visual Studio Code is : ctrl + shift + `  )
-    - Run 'pip install Flask' in the Terminal (pip uses python so make sure that python is installed first)
+# Virual Environment
+    - Run 'pip install virtualenv' in the Terminal
+    - Then run 'virtualenv -p python3 env
+    - Then run 'activate'
+
+
+# MongoDB resources videos
+    - https://www.youtube.com/watch?v=w1STSSumoVk&list=TLPQMDgwMzIwMjXuxUDy6Dx3Lw&index=2
+    - https://www.youtube.com/playlist?list=PL193izPqf5X7dtkXaoVNWMIL_uF0Ag9km
+    - https://www.w3schools.com/mongodb/ 
 
 
 # Recommended Downloads
