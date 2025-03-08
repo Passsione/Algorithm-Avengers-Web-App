@@ -13,8 +13,9 @@
 
  
 # MongoDB resources videos
-    - https://www.youtube.com/watch?v=w1STSSumoVk&list=TLPQMDgwMzIwMjXuxUDy6Dx3Lw&index=2
-    - https://www.youtube.com/watch?v=mISFEwojJmE
+    - https://www.youtube.com/watch?v=w1STSSumoVk&list=TLPQMDgwMzIwMjXuxUDy6Dx3Lw&index=2 (login backend part 1)
+    - https://www.youtube.com/watch?v=mISFEwojJmE (login backend part 2)
+    - https://www.youtube.com/watch?v=3wNvKybVyaI
     - https://www.youtube.com/playlist?list=PL193izPqf5X7dtkXaoVNWMIL_uF0Ag9km
     - https://www.w3schools.com/mongodb/ 
 
