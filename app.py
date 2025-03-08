@@ -7,7 +7,7 @@ def home():
 
 @app.route('/student_dashboard')
 def stud_dashboard():
-    return "<h1> this will be a student dashboard </h1>
+    return "<h1> this will be a student dashboard </h1>"
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
