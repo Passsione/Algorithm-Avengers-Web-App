@@ -3,10 +3,11 @@
 
 # Virual Environment
     - Run 'pip install virtualenv' in the Terminal
-    - Then run 'virtualenv -p python3 env
-    - Then run 'activate'
+    - Then run 'virtualenv -p python3 env'
+    - Then run 'env/Scripts/activate'. The terminal will show (env) before the dirctory if was success
+    - Run 'pip install flask pymongo passlib'
 
-
+    
 # MongoDB resources videos
     - https://www.youtube.com/watch?v=w1STSSumoVk&list=TLPQMDgwMzIwMjXuxUDy6Dx3Lw&index=2
     - https://www.youtube.com/playlist?list=PL193izPqf5X7dtkXaoVNWMIL_uF0Ag9km
