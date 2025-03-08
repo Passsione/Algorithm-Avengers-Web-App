@@ -22,7 +22,7 @@ def about():
     return "<h1>about page</h1>"
 
 @app.route('/contact')
-def contact ("<h1> this is for the contact page</h1>")
+def contact "<h1> this is for the contact page</h1>"
 
 
 if __name__ == '__main__':
