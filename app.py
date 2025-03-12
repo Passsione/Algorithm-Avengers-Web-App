@@ -1,27 +1,21 @@
 from flask import *
-from functools import wraps
-import pymongo
 from user import routes
 
 app = Flask(__name__)
 
-
-# Decorators
-def login_required(f):
-  @wraps(f)
-  def wrap(*args, **kwargs):
-    if 'logged_in' in session:
-      return f(*args, **kwargs)
-    else:
-      return redirect('/')
-  
-  return wrap
-
-# Routes
+# Route
 
 @app.route('/')                  #function for the landing page
 def home():
   return render_template('home.html')
+
+@app.route('/login/')
+def login ():
+  return render_template('login.html')
+
+@app.route('/signup/')
+def signup ():
+  return render_template('sign_up.html')
 
 @app.route('/about/')                    #function for the about page
 def about():
