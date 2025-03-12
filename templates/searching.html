@@ -3,9 +3,14 @@
 {% block content %}
 <h1>Make a claim</h1>
 <div class="container flex-col">
-    <input type="search" placeholder="name of item">
-    <br>
-    <!-- <input type="" -->
+    <form>
+        <textarea style="height: 8rem;" name="searching"  placeholder="describe your item"></textarea>
+        <!-- <input type="search" name="searching" placeholder="name of item"> -->
+        <br>
+        <!-- <input type="" -->
     <a href="{{url_for('claim')}}">Sumbit</a>
+
+        <!-- <input type="submit" value="Sumbit"> -->
+    </form>
 </div>
 {% endblock %}

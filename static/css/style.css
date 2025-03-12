@@ -2,6 +2,7 @@
 .flex{
     display: flex;
     gap: 2rem;
+    justify-self: center;
 }
 
 .flex-col{
@@ -22,16 +23,50 @@
 .container, h1{
     justify-self: center;
     align-items: center;
+    gap: 1rem;
 }
 .hero{
     justify-items: center ;
     align-items: center;
 
 }
+.item-display{
+    display: flex;
+    justify-self: center;
+    justify-items: center;
+    align-items: center;
+    gap: 15rem;
+    width: fit-content;
+    padding-top: 20px;
+}
+.item-display .item-info, .additional div{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+}
+.item-info .additional{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    align-self: center;
+    gap: 3rem;
+    width: fit-content;
+}
+
+.non-stu{
+    margin-top: 3rem;
+    justify-items: center;
+    align-items: center;
+}
+.non-stu .col{
+    gap: 1rem;
+}
+.browse-card{
+    margin-top: 1rem;
+}
 .footer{
     margin-top: 10rem;
     justify-self: center;
-}
-.container{
-    /* background-color: burlywood; */
 }

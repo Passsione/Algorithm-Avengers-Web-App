@@ -2,6 +2,30 @@
 {%extends "base.html"%}
 
 {% block content %}
-    <h1>Is this your item</h1>
-    
+    <h1>Is this your item?</h1>
+    <div class="item-display">
+        <img src="../static/images/iphone.jpeg" alt="">
+
+        <div class="item-info">
+            <h2>IPhone 16</h2>
+            <div class="flex">
+                Location:
+                Steve Biko
+            </div>
+            Any additional information you would like to submit?
+            <br>
+            <div class="additional">
+                <textarea style="height: 6rem; width: 11rem;" placeholder="Additional information" name="" id=""></textarea>
+                <div>
+                    <label for="img-proof">if you would like, upload an image of you with the item</label>
+                    <input type="file" name="img-proof" id="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex">
+        <a href="{{url_for('home')}}">Submit</a>
+        <a href="{{url_for('browse')}}">Not what you're looking for?</a>
+
+    </div>
 {% endblock %}
