@@ -4,6 +4,8 @@ from models import *
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db'
+
 
 
 # Routes
@@ -22,7 +24,7 @@ def signup_view():
     return render_template('signup.html')
 
 
-@app.route('/Student/')                   #function for claiming a student card page
+@app.route('/StudentCard/')                   #function for claiming a student card page
 def student_card():
     return render_template('student_card.html')
 
