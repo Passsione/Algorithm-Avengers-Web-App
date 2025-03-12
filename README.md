@@ -8,6 +8,7 @@
     - Run 'pip install virtualenv' in the Terminal
     - Then run 'virtualenv -p python3 env'
     - Then run 'env/Scripts/activate'. The terminal will show (env) before the directory if it was successful
+    - Run 'pip install Flask-SQLAlchemy '
     - Run the app with 'python app.py'
 
 
