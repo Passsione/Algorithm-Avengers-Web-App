@@ -1,4 +1,5 @@
 from flask import *
+from models import *
 # from functools import wraps
 
 app = Flask(__name__)
@@ -50,6 +51,7 @@ def login_view():
 @app.route('/Profile/')                   #function for the Profile page
 def user_profile():
     return render_template('userprofile.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

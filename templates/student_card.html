@@ -5,5 +5,32 @@
 {% block content %}
     <h1>We will check for a matching card</h1>
 
+    <div class="container">
+                  
+        <div class="title container">  
+            select a title:
+
+            <label for="mrs"> Mrs</label>
+            <input type="radio" name="title" id="mrs">
+
+            <label for="mr"> Mr</label>
+            <input type="radio" name="title" id="mr">
+            
+            <label for="ms"> Ms</label>
+            <input type="radio" name="title" id="ms">
+
+        </div>
+
+        <div class="container">
+            <label for="iname">Initials and last name</label>
+            <input type="text" name="iname"><br>
+
+            <label for="stu_num">Student number</label>
+            <input type="text" name="stu_num"><br>
+
+            <input type="submit" value="Submit">
+        </div>
+
+    </div>
     
 {% endblock %}

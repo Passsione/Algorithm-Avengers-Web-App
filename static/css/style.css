@@ -8,10 +8,29 @@
     display: flex;
     flex-direction: column;
     background-color: burlywood;
-    height: 10rem;
     align-items: center;
     padding: 10px;
+    width: fit-content;
 
+}
+.col{
+    display: flex;
+    flex-direction: column;
+    
+
+}
+.container, h1{
+    justify-self: center;
+    align-items: center;
+}
+.hero{
+    justify-items: center ;
+    align-items: center;
+
+}
+.footer{
+    margin-top: 10rem;
+    justify-self: center;
 }
 .container{
     /* background-color: burlywood; */

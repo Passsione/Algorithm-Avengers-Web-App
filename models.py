@@ -1,6 +1,7 @@
 from flask_sqlalchemy  import *
 
 db = SQLAlchemy()
+
 class Admin(db.Model):  # Admin table
     __tablename__ = 'admin'
     admin_id = db.column(db.Integer, primary_key=true)
@@ -18,6 +19,9 @@ class Item(db.Model): # Item table
     item_catergory = db.column(db.String(30))
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     admin = db.relationship("Admin", backref=backref("admin", uselist=False))
+
+    def __repr__(self):     # Instance of the class when printed
+        return f'<Item {self.id}>'
     
 class Student(db.Model): # Student table
     __tablename__ = 'student'
@@ -30,11 +34,13 @@ class Student(db.Model): # Student table
     student_quali = db.column(db.String(100), nullable=false)
     student_id = db.column(db.Integer, nullable=false)
 
+
+
 '''
 Report entity
 - report ID
 - Student number
-- Date & time
+- Date & time #default = db.func.current_timestamp()
 - Admin ID
 - Item ID
 - Location
