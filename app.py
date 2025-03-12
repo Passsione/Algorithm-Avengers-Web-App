@@ -1,21 +1,7 @@
 from flask import *
-from functools import wraps
-import pymongo
-from user import routes
+# from functools import wraps
 
 app = Flask(__name__)
-
-
-# Decorators
-def login_required(f):
-  @wraps(f)
-  def wrap(*args, **kwargs):
-    if 'logged_in' in session:
-      return f(*args, **kwargs)
-    else:
-      return redirect('/')
-  
-  return wrap
 
 # Routes
 
@@ -27,17 +13,20 @@ def home():
 def about():
     return render_template('about.html')
 
-'''
-@app.route('/contact/')                   #function for the contact page
-def contact():
-    return render_template('contact.html')
-'''
 
 @app.route('/SignUp/')                   #function for the signup page
 def signup_view():
     return render_template('signup.html')
 
 
+@app.route('/LogIn/')                   #function for the Login page
+def login_view():
+    return render_template('Login.html')
+
+
+@app.route('/Profile/')                   #function for the Profile page
+def user_profile():
+    return render_template('userprofile.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
