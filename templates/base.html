@@ -12,10 +12,13 @@
     <!-- Links to the pages in templates -->
     <a href="{{url_for('home')}}">Home</a>
     <a href="{{url_for('about')}}">About</a>
-    <a href="{{url_for('signup_view')}}">Sign-Up</a>
-    <a href="{{url_for('login_view')}}">Log-In</a>
-    <a href="{{url_for('user_profile')}}">Profile</a>
     
+    {# <a href="{{url_for('signup_view')}}">Sign-Up</a>
+    <a href="{{url_for('login_view')}}">Log-In</a>
+    <a href="{{url_for('signout_view')}}">Log-In</a>
+    
+    <a href="{{url_for('user_profile')}}">Profile</a>
+    #}
 
 
     {% block content %}

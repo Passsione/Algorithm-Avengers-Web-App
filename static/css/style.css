@@ -1,0 +1,18 @@
+
+.flex{
+    display: flex;
+    gap: 2rem;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    background-color: burlywood;
+    height: 10rem;
+    align-items: center;
+    padding: 10px;
+
+}
+.container{
+    /* background-color: burlywood; */
+}

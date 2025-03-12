@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+
+{% block content %}
+<h1>Make a claim</h1>
+<div class="flex-col">
+    <input type="search" placeholder="name of item">
+    <br>
+    <!-- <input type="" -->
+    <a href="{{url_for('claim')}}">Sumbit</a>
+</div>
+{% endblock %}

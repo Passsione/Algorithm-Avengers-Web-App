@@ -5,9 +5,29 @@
     <h1>HOME PAGE</h1>
 
     <div class="container">
-    
-        <div class="home-card">
+
+        <h2>How can we help? </h2>
+        <div class="flex">
             
+            <div class="home-card flex-col">
+                <h3>Lost your student card</h3>
+                <a href="{{url_for('student_card')}}">Click me</a>
+            </div>
+
+            <div class="home-card flex-col">
+                <h3>Or maybe your cell-phone?</h3>
+                <a href="{{url_for('searching')}}">Make a claim</a>
+            </div>
+            
+            <div class="home-card flex-col">
+                <h3>Can't find the item your looking for?</h3>
+                <a href="{{url_for('browse')}}">Browse items</a>
+            </div>
+            
+            <div class="home-card flex-col">
+                <h3>Found a lost item?</h3>
+                <a href="{{url_for('report')}}">Make a report</a>
+            </div>
         </div>
     </div>
 

@@ -21,6 +21,27 @@ def signup_view():
     return render_template('signup.html')
 
 
+@app.route('/Student/')                   #function for claiming a student card page
+def student_card():
+    return render_template('student_card.html')
+
+    
+@app.route('/Searching/')                   #function for searching for a lost item page
+def searching():
+    return render_template('searching.html')
+
+@app.route('/Browse/')                   #function for browsing items page
+def browse():
+    return render_template('browse.html')
+
+@app.route('/Report/')                   #function for making a report page
+def report():
+    return render_template('report.html')
+
+@app.route('/Claim/')                   #function for claiming an item page
+def claim():
+    return render_template('item.html')
+
 @app.route('/LogIn/')                   #function for the Login page
 def login_view():
     return render_template('Login.html')

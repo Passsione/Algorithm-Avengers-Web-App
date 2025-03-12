@@ -40,6 +40,7 @@ Report entity
 - Location
 '''
 
+
 '''
 Claimed Item entity
 - Student number
