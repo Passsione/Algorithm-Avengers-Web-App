@@ -1,9 +1,9 @@
 from flask import *
-# from models import *
+from models import *
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db' # sir's videos
 
 # db.init_app(app)
 
