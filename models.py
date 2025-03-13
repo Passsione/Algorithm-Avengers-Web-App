@@ -13,7 +13,7 @@ class Admin(db.Model):  # Admin table
 
 class Item(db.Model): # Item table
     __tablename__ = 'item'
-    item_id = db.column(db.Integer, primary_key=true)
+    item_id = db.column(db.Integer, primary_key=True)
     item_name = db.column(db.String(100), nullable=False)
     item_desc = db.column(db.Text, nullable=False)
     item_catergory = db.column(db.String(30))
@@ -26,7 +26,7 @@ class Item(db.Model): # Item table
 class Student(db.Model): # Student table
     __tablename__ = 'student'
 
-    student_num = db.column(db.Integer, primary_key=true)
+    student_num = db.column(db.Integer, primary_key=True)
     student_fname = db.column(db.String(100), nullable=False)
     student_lname = db.column(db.String(100), nullable=False)
     student_email = db.column(db.String(100), nullable=False)
