@@ -41,7 +41,6 @@ Report entity
 - report ID
 - Student number
 - Date & time #default = db.func.current_timestamp()
-- Admin ID
 - Item ID
 - Location
 '''
