@@ -11,17 +11,23 @@ class Admin(db.Model):  # Admin table
     admin_password = db.column(db.String(100), nullable=False)
 
 
-class Item(db.Model): # Item table
+class Item(db.Model):  # Item table
     __tablename__ = 'item'
-    item_id = db.column(db.Integer, primary_key=True)
-    item_name = db.column(db.String(100), nullable=False)
-    item_desc = db.column(db.Text, nullable=False)
-    item_catergory = db.column(db.String(30))
-    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
-    admin = db.relationship("Admin", backref=backref("admin", uselist=False))
+    item_id = db.Column(db.Integer, primary_key=True)
+    item_name = db.Column(db.String(100), nullable=False)
+    item_desc = db.Column(db.Text, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'))  # Reference to Category table
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.admin_id'))  # FK to Admin table
+    
+    category = db.relationship('Category', backref='items')
+    admin = db.relationship('Admin', backref=db.backref('items', lazy=True))
 
-    def __repr__(self):     # Instance of the class when printed
-        return f'<Item {self.id}>'
+    
+class Category(db.Model):  # Item Categories
+    __tablename__ = 'category'
+    category_id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(50), nullable=False, unique=True)  # Category name (unique)
+
     
 class Student(db.Model): # Student table
     __tablename__ = 'student'
@@ -36,24 +42,31 @@ class Student(db.Model): # Student table
 
 
 
-'''
-Report entity
-- report ID
-- Student number
-- Date & time #default = db.func.current_timestamp()
-- Item ID
-- Location
-'''
+class Report(db.Model):  # Report entity
+    __tablename__ = 'report'
+
+    report_id = db.Column(db.Integer, primary_key=True)
+    student_num = db.Column(db.Integer, db.ForeignKey('student.student_num'), nullable=False)
+    student = db.relationship('Student', backref=db.backref('reports', lazy=True))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
+    item = db.relationship('Item', backref=db.backref('reports', lazy=True))
+    location = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 
-'''
-Claimed Item entity
-- Student number
-- Item ID
-- Admin ID
-- Approval
-- Description provided by the claimer
-'''
+class ClaimedItem(db.Model):  # Claimed Item entity
+    __tablename__ = 'claimed_item'
+
+    claimed_item_id = db.Column(db.Integer, primary_key=True)
+    student_num = db.Column(db.Integer, db.ForeignKey('student.student_num'), nullable=False)
+    student = db.relationship('Student', backref=db.backref('claimed_items', lazy=True))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
+    item = db.relationship('Item', backref=db.backref('claimed_items', lazy=True))
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.admin_id'), nullable=False)
+    admin = db.relationship('Admin', backref=db.backref('claimed_items', lazy=True))
+    approval = db.Column(db.Boolean, nullable=False, default=False)
+    description = db.Column(db.Text, nullable=True)
+
 
 
 
