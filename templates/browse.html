@@ -2,5 +2,42 @@
 {%extends "base.html"%}
 
 {% block content %}
-    <h1>Do these look familiar </h1>
+    <h1>Do these look familiar?</h1>
+
+    <div class="flex">
+        <input type="search" placeholder="search..." name="browse" id="">
+    </div>
+    <div class="flex browse">
+              
+        <div class="col browse-card">
+            <a href="" class="col">
+            <img src="../static/images/bag.jpeg" alt="">
+            Laptop bag
+            <button>Claim</button>
+            </a>
+        </div>
+        <div class="col browse-card">
+            <a href="{{url_for('claim')}}" class="col">
+            <img src="../static/images/iphone.jpeg" alt="">
+            IPhone 16
+            <button>Claim</button>
+            </a>
+        </div> 
+        <div class="col browse-card">
+            <a href="" class="col">
+            <img src="../static/images/shoes.jpeg" alt="">
+            Shoes
+            <button>Claim </button>
+            </a>
+        </div>  
+
+        <div class="col browse-card">
+            <a href="" class="col">
+            <img src="../static/images/flats.jpeg" alt="">
+            Shoes (flats)
+            <button>Claim </button>
+            </a>
+        </div>  
+    </div>
+    
 {% endblock %}

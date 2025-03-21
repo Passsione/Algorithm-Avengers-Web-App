@@ -3,9 +3,28 @@
 {% block content %}
 <h1>Make a claim</h1>
 <div class="container flex-col">
-    <input type="search" placeholder="name of item">
-    <br>
-    <!-- <input type="" -->
-    <a href="{{url_for('claim')}}">Sumbit</a>
+    <!-- <form> -->
+        <div class="flex-col claim-container">   
+            <div class="property">
+                <select name="Category" id="" >
+                    <option value="-1" >Choose a category</option>
+                    <option value="phone">Phone</option>
+                    <option value="bag">Bag</option>
+                    <option value="clothes">clothes</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+            <textarea style="height: 8rem;" name="searching"  placeholder="describe your item"></textarea>
+            <!-- <input type="search" name="searching" placeholder="name of item"> -->
+            <br>
+            <!-- <input type="" -->
+
+            <a href="{{url_for('claim')}}">
+                <button>Submit</button>
+            </a>
+
+            <!-- <input type="submit" value="Sumbit"> -->
+        </div>
+    <!-- </form> -->
 </div>
 {% endblock %}
