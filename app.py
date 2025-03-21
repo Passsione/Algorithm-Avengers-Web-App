@@ -14,9 +14,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db' # sir's videos
 def home():
   return render_template('home.html')
   
-@app.route('/login',methods = ['GET','POST']
-           def login():
-             if request.method == 'POST':
+@app.route('/login',methods = ['GET','POST'])
+def login():
+    if request.method == 'POST':
+      student_num = request.form['student_num']  
                
 @app.route('/about/')                    #function for the about page
 def about():
