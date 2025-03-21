@@ -1,13 +1,35 @@
-/* Global body styles */
+
+/* General Styling */
 body {
     background-color: black;
-    color: lightgray;  /* Grey text */
-    font-family: Arial, sans-serif;
+    color: lightgray;
+    font-family: "Times New Roman", serif;
 }
 
-/* Navigation bar */
+/* Logo and Portal Title Styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dut-logo {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.portal-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Navbar Styling */
 .navbar {
-    background-color: #222;  /* Dark Grey */
+    background-color: #222;
 }
 
 .navbar-brand, .nav-link {
@@ -18,10 +40,13 @@ body {
     color: grey !important;
 }
 
-/* Button styles */
+/* Button Styling */
 .btn-primary {
     background-color: grey;
     border: none;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 8px;
 }
 
 .btn-primary:hover {
@@ -29,87 +54,60 @@ body {
 }
 
 .btn-secondary {
-    background-color: #555;  /* Lighter grey for secondary buttons */
+    background-color: #555;
     border: none;
-}
-
-.btn-secondary:hover {
-    background-color: #333;  /* Darker grey on hover */
-}
-
-/* Home card styling */
-.home-card {
-    background-color: #555;  /* Set to a grey background */
-    height: 8rem;
-    justify-items: center;
-    padding: 15px;
-    color: white;  /* White text inside cards */
+    font-size: 1.2rem;
+    padding: 10px 20px;
     border-radius: 8px;
 }
 
+.btn-secondary:hover {
+    background-color: #333;
+}
+
+/* Home Card Styling */
+.home-card {
+    background-color: #444;
+    height: 8rem;
+    justify-items: center;
+    padding: 15px;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+}
+
 .home-card a {
-    position: relative;
-    top: 35%;
     text-decoration: none;
     background-color: grey;
     padding: 5px 10px;
     border-radius: 5px;
     color: white;
+    font-weight: bold;
 }
 
 .home-card a:hover {
-    background-color: darkgrey;  /* Hover effect for links inside home card */
+    background-color: darkgrey;
 }
 
-/* Hero section styles */
+/* Hero Section */
 .hero {
     text-align: center;
-    padding: 40px 0;
-    background-color: #333;  /* Dark grey for the hero section */
+    padding: 50px 0;
+    background-color: #333;
     color: white;
+    border-bottom: 3px solid grey;
 }
 
 .hero h1, .hero h3 {
     color: white;
 }
 
-/* Flexbox utility classes */
-.flex {
-    display: flex;
-    gap: 2rem;
-    justify-self: center;
-}
-
-.flex-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    width: fit-content;
-}
-
-.container, h1 {
-    justify-self: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* Styling for the footer */
+/* Footer Styling */
 .footer {
     margin-top: 10rem;
-    justify-self: center;
-}
-
-/* Add margin between cards and sections */
-.container, .home-card {
-    margin-bottom: 1rem;
-}
-
-/* Hero text styling */
-.hero h1 {
-    margin-top: 3rem;
-    justify-content: center;
-    align-content: center;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #222;
+    color: lightgray;
 }
