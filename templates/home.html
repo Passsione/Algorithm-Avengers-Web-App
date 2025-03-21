@@ -1,43 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="hero col text-center">
-        <!-- DUT Logo and Portal Title -->
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/dut_logo.jpg') }}" alt="DUT Logo" class="dut-logo">
-            <h1 class="portal-title">Lost and Found</h1>
-        </div>
+    
+    <h1>HOME PAGE</h1>
+
+    <div class="hero col">
         <h3>Lost it? We found it?</h3>
-        <h2>We aim to offer a centralized and intuitive system for managing lost and found items on campus.</h2>
+        <h1>We aim to offer a centralized and intuitive system for managing lost and found items campus</h1>
     </div>
 
-    <!-- Call to Action Section -->
+    <!-- New section with call to action for reporting lost items or viewing found items -->
     <div class="container text-center mt-5">
-        <h2>Welcome to the Lost & Found Portal</h2>
+        <h1>Welcome to the Lost & Found Portal</h1>
         <p>Report lost items, find missing belongings, and help reunite people with their valuables.</p>
+    
         <a href="/report" class="btn btn-primary btn-lg">Report a Lost Item</a>
         <a href="/found" class="btn btn-secondary btn-lg">View Found Items</a>
     </div>
 
     <div class="container">
-        <h2>How can we help?</h2>
+        <h2>How can we help? </h2>
         <div class="flex">
             <div class="home-card flex-col">
                 <h3>Lost your student card?</h3>
-                <a href="{{ url_for('home') }}">Lost your student card?</a>
+                <a href="{{url_for('home')}}">Lost your student card?</a>
             </div>
             <div class="home-card flex-col">
                 <h3>Or maybe your cell-phone?</h3>
-                <a href="{{ url_for('searching') }}">Make a claim</a>
+                <a href="{{url_for('searching')}}">Make a claim</a>
             </div>
             <div class="home-card flex-col">
                 <h3>Can't find the item you're looking for?</h3>
-                <a href="{{ url_for('browse') }}">Browse items</a>
+                <a href="{{url_for('browse')}}">Browse items</a>
             </div>
             <div class="home-card flex-col">
                 <h3>Found a lost item?</h3>
-                <a href="{{ url_for('report') }}">Make a report</a>
+                <a href="{{url_for('report')}}">Make a report</a>
             </div>
         </div>
     </div>
+
+    <!-- Place the CSS in the content block (for testing purposes) -->
+    <style>
+        /* Add the CSS here (same as earlier code) */
+    </style>
+
 {% endblock %}
