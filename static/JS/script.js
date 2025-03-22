@@ -2,7 +2,7 @@ const searchEl = document.querySelector()
 
 /* search bar function*/
 
-<
+
     function search_items() {
         let input = document.getElementById('searchbar');  // Get the search bar input element
         let filter = input.value.toLowerCase();  // Get the value of the input field (convert to lowercase for case-insensitive search)
@@ -21,3 +21,16 @@ const searchEl = document.querySelector()
         }
     }
 
+/* login function*/
+
+function login() {
+  // Simulate login validation (replace with your actual server-side logic)
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if (username === "user" && password === "pass") { // Example credentials
+    window.location.href = "welcome.html"; // Redirect to welcome page
+  } else {
+    alert("Invalid username or password");
+  }
+}
