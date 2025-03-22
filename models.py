@@ -1,4 +1,5 @@
-from flask_sqlalchemy  import *
+from flask_sqlalchemy import SQLAlchemy
+
 
 db = SQLAlchemy()
 
@@ -18,7 +19,7 @@ class Item(db.Model): # Item table
     item_desc = db.column(db.Text, nullable=False)
     item_catergory = db.column(db.String(30))
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
-    admin = db.relationship("Admin", backref=backref("admin", uselist=False))
+    admin = db.relationship("Admin", backref=db.backref("admin", uselist=False))
 
     def __repr__(self):     # Instance of the class when printed
         return f'<Item {self.id}>'

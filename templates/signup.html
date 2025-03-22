@@ -1,31 +1,37 @@
-{%extends "base.html"%}
+<!-- signup.html -->
+{% extends "base.html" %}
 
 {% block content %}
-   
-    <div class="card-wrapper">
+<div class="card-wrapper">
+  <div class="card">
+    <form method="POST" action="{{ url_for('signup_view') }}">
+        <div class="container">
+            <h1>Sign Up</h1>
+            <p>Please fill in this form to create an account.</p>
+            <hr>
 
-        <div class="card">
-    
-          <h1 class="center">Create an Account</h1>
-    
-          <form name="signup_form">
-    
-            <label for="name">Name</label>
-            <input type="text" name="name" class="field" required>
-    
-            <label for="email">Email</label>
-            <input type="email" name="email" class="field" required>
-    
-            <label for="password">Password</label>
-            <input type="password" name="password" class="field" required>
-    
-            <p class="error error--hidden"></p>
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
             
-            <input type="submit" value="Sign Up" class="btn" on>
-          
-          </form>
-          
+            <label>
+                <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+            </label>
+
+            <div class="clearfix">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Sign Up</button>
+            </div>
         </div>
-      
-      </div>
+    </form>
+    <div class="login-link">
+        <p>Already have an account? <a href="{{ url_for('login') }}">Log In</a></p>
+    </div>
+  </div>
+</div>
 {% endblock %}

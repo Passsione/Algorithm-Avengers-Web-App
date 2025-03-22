@@ -4,6 +4,12 @@ body {
     color: lightgray;
     font-family: "Times New Roman", serif;
 }
+.flex{
+    display: flex;
+}
+.home-con{
+    gap: 2rem;
+}
 
 /* Logo and Portal Title Styling */
 .logo-container {
@@ -15,10 +21,10 @@ body {
 }
 
 .dut-logo {
-    width: 200px;  /* Increased width for better visibility */
+    width: 200px;
     height: auto;
     border-radius: 5px;
-    object-fit: contain; /* Ensures the image fits nicely within the bounds */
+    object-fit: contain;
 }
 
 /* Portal Title */
@@ -111,4 +117,45 @@ body {
     padding: 20px;
     background-color: #222;
     color: lightgray;
+}
+
+/* Search engine styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#searchbar {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+#list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.items {
+    font-size: 1.2em;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Login Page Specific Styling */
+.login {
+    background-color: black;
+    color: lightgray;
+    font-family: "Times New Roman", serif;
 }
