@@ -12,18 +12,17 @@
     <div class="card">
         <h1 class="center">Log In</h1>
 
-        <!-- Login form with POST method -->
-        <form method="POST" action="{{ url_for('handle_login') }}">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="field" required>
+        <form id="loginForm">
 
-            <label for="password">Password</label>
-            <input type="password" name="password" class="field" required>
+          <label for="username">Username:</label><br>
+          <input type="text" name="username" name="field" required><br><br>
 
-            <p class="error error--hidden"></p>
+          <label for="password">Password:</label><br>
+          <input type="password" name="password" class="field" required> <br><br>
 
-            <input type="submit" value="Log In" class="btn">
-            <a href="{{ url_for('signup_view') }}">
+          <p class="error error--hidden"></p>
+
+          <button type="button" onclick="login()">Login</button>
         </form>
 
         <p>Don't have an account? <a href="{{ url_for('signup_view') }}">Sign Up</a></p>

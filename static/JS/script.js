@@ -28,8 +28,8 @@ function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  if (username === "user" && password === "pass") { // Example credentials
-    window.location.href = "welcome.html"; // Redirect to welcome page
+  if (username === "user" && password === "psw") { // Example credentials
+    window.location.href = "home.html"; // Redirect to home/welcome page
   } else {
     alert("Invalid username or password");
   }
