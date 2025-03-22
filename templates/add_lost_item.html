@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Add New Lost Item</h1>
+    
+    <!-- Display any flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alert alert-{{ messages[0][0] }} mt-4">
+          {{ messages[0][1] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <!-- Form for adding a new lost item -->
+    <form method="POST">
+      <div class="form-group">
+        <label for="name">Item Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Item Description</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
+      </div>
+
+      <!-- Category selection -->
+      <div class="form-group">
+        <label for="category_id">Category</label>
+        <select class="form-control" id="category_id" name="category_id">
+          <option value="">Select Category</option>
+          {% for category in categories %}
+            <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Image URL input (optional) -->
+      <div class="form-group">
+        <label for="image_url">Image URL</label>
+        <input type="text" class="form-control" id="image_url" name="image_url">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Post Item</button>
+    </form>
+  </div>
+{% endblock %}

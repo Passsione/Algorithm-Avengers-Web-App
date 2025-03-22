@@ -3,40 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lost and Found </title>
+    <title>Lost and Found</title>
 
     <link rel="stylesheet" href="../static/css/style.css">
-
 </head>
 <body>
-    <!-- Links to the pages in templates -->
-    <a href="{{url_for('home')}}">Home</a>
-    <a href="{{url_for('about')}}">About Us</a>
 
-    {# <a href="{{url_for('signup_view')}}">Sign Up</a>
-    <a href="{{url_for('login_view')}}">Log In</a>
-    
-    <a href="{{url_for('user_profile')}}">Profile</a>
-    #}
-
+    <!-- Navigation Bar -->
+    <nav>
+        <ul class="navbar">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 
     {% block content %}
-    <!-- other templates are placed in here -->
+  
     {% endblock %}
 
-    <div>
+    <!-- Footer -->
+    <footer>
         <div class="footer flex">
-                
-            <a href="{{url_for('about')}}">About us  </a>
-            <a href="">FAQ </a>
-            <a href="">Contact us </a>
-
-            <a href="{{url_for('user_profile')}}">Profile</a>
+          <a href ="{{ url_for('about') }}">About Us</a>
+          <a href ="{{ url_for('contact') }}">Contact</a>
         </div>
-        
+    </footer>
 
-
-    </div>
-    
 </body>
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Found Item</title>
+</head>
+<body>
+    <h1>Report Found Item: {{ item.item_name }}</h1>
+
+    <!-- Flash message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <p class="alert alert-{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Form to report found item -->
+    <form method="POST">
+        <label for="location">Location:</label>
+        <input type="text" name="location" required><br>
+
+        <label for="campus">Campus:</label>
+        <input type="text" name="campus" required><br>
+
+        <label for="block">Block:</label>
+        <input type="text" name="block" required><br>
+
+        <label for="item_features">Item Features:</label>
+        <textarea name="item_features" required></textarea><br>
+
+        <button type="submit">Submit Report</button>
+    </form>
+</body>
+</html>

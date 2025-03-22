@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="chat">
+    <h3>Chat with Admin (Report ID: {{ report.report_id }})</h3>
+    
+    <div class="chat-messages">
+        {% for message in chat_messages %}
+            <div class="message">
+                <p><strong>{{ message.admin_id if message.admin_id else 'You' }}:</strong> {{ message.message_text }}</p>
+                <span>{{ message.timestamp }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form action="{{ url_for('chat_with_admin', report_id=report.report_id) }}" method="POST">
+        <textarea name="message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+{% endblock %}
