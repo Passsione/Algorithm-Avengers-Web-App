@@ -48,8 +48,7 @@ def report():
 def user_profile():
     return render_template('userprofile.html')
 
-@app.route('/logout')  # Logout route
-def logout():   
-
-   if __name__ == '__main__':
+# @app.route('/logout')  # Logout route
+# def logout():   
+if __name__ == '__main__':
     app.run(debug=True)
