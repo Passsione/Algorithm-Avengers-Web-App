@@ -12,6 +12,7 @@ class ItemStatus(Enum):
     CLAIMED = 'claimed'
     AVAILABLE = 'available'
 
+
 class Student(db.Model, UserMixin):
     __tablename__ = 'student'
     student_num = db.Column(db.String(8), primary_key=True)

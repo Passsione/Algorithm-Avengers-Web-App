@@ -12,6 +12,7 @@
 
     - Freedom's video: https://dut4lifeac-my.sharepoint.com/:v:/r/personal/freedomk_dut_ac_za/Documents/Walkthrough%20Videos%20-%20Working%20with%20Flask/Tools+Installing%20Flask_part2.mp4?csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=4rTwbs
 
+
 # Run the app with 'python app.py' in the terminal
     - ctrl + click 
 
