@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="student-dashboard">
+    <!-- Notifications Section -->
+    <div class="notifications">
+        <h3>Notifications</h3>
+        {% for notification in notifications %}
+            <div class="notification">
+                <p>{{ notification.message }}</p>
+                <span>{{ notification.created_at }}</span>
+                {% if not notification.read %}
+                    <a href="/mark_notification_read/{{ notification.notification_id }}">Mark as Read</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Found Item Reports Section -->
+    <div class="found-reports">
+        <h3>Your Found Item Reports</h3>
+        {% for report in reports %}
+            <div class="report">
+                <p>{{ report.item_name }} (ID: {{ report.report_id }})</p>
+                <a href="/chat/{{ report.report_id }}">Chat with Admin</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat">
+        <h3>Chat Room</h3>
+        {% for message in chat_messages %}
+            <div class="chat-message">
+                <p>{{ message.message_text }}</p>
+                <span>{{ message.timestamp }}</span>
+            </div>
+        {% endfor %}
+        <form action="/send_message" method="POST">
+            <textarea name="message_text" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

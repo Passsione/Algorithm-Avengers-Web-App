@@ -9,6 +9,11 @@ select{
     width: 100%;
 }
 
+.navbar{
+    display: flex;
+    padding-left: 2rem;
+}
+
 textarea{
     height: 6rem;
     width: 100%;
@@ -20,7 +25,6 @@ textarea{
     align-items: center;
     padding: 10px;
     width: fit-content;
-
 }
 .home-card{
     background-color: burlywood;
@@ -119,4 +123,32 @@ textarea{
 .footer{
     margin-top: 10rem;
     justify-self: center;
+}
+
+/* MOgale */
+
+.profile{
+    background-color:hsl(0, 33%, 9%);
+    position: relative;
+    right: 10%;
+    top: 100%;
+}
+
+.profile:hover{
+    cursor: pointer;
+}
+
+.profile .flex-col{
+    position: absolute;
+    background-color:hsl(0, 33%, 9%);
+    color: white;
+    right: 1%;
+    top: 110%;
+    align-self: center;
+    align-items: center;
+    width: 15rem;
+}
+
+.profile:hover{
+    cursor: pointer;
 }

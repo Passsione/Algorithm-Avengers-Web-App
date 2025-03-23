@@ -1,46 +1,42 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
-    
-    <h1>HOME PAGE</h1>
+<div class="container text-center mt-5">
+    <h1>Welcome to Lost & Found</h1>
+    <p>Manage lost and found items easily on campus.</p>
 
-    <div class="hero col" >
-        <h3>
-            Lost it? We found it?
-        </h3>
-        <h1>
-            We aim to offer a centralized and intuitive system for managing lost and found items campus
-        </h1>
+    {% if not session['email']  %}
+    <!-- Action buttons for Sign Up and Login -->
+    <div class="mb-3">
+        <a href="{{ url_for('signup') }}" class="btn btn-primary">Sign Up</a>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
     </div>
+    {% endif %}
 
-    <div>
+    <!-- Display Lost Items if User is Logged In -->
+    {% if 'email' in session %}
+    <h2>Available Lost Items</h2>
+    <div class="row">
+        {% for item in items %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ item.image_url }}" alt="{{ item.item_name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.item_name }}</h5>
+                        <p class="card-text">{{ item.item_desc[:100] }}...</p>
+                        {%if current_user.is_authenticated%}
+                        <a href="{{ url_for('claim_item', item_id=item.item_id) }}" class="btn btn-success">Claim Item</a>
+                        {%else%}
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-success">Item Profile</a>
 
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    <div class="container">
-
-        <h2>How can we help? </h2>
-        <div class="flex">
-            
-            <div class="home-card flex-col">
-                <h3>Lost your student card?</h3>
-                <a href="{{url_for('home')}}">Lost your student card?</a>
-            </div>
-
-            <div class="home-card flex-col">
-                <h3>Or maybe your cell-phone?</h3>
-                <a href="{{url_for('searching')}}">Make a claim</a>
-            </div>
-            
-            <div class="home-card flex-col">
-                <h3>Can't find the item your looking for?</h3>
-                <a href="{{url_for('browse')}}">Browse items</a>
-            </div>
-            
-            <div class="home-card flex-col">
-                <h3>Found a lost item?</h3>
-                <a href="{{url_for('report')}}">Make a report</a>
-            </div>
-        </div>
-    </div>
-
+    {% else %}
+    <p>Please log in to view and interact with lost items.</p>
+    {% endif %}
+</div>
 {% endblock %}

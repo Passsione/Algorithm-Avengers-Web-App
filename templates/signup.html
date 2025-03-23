@@ -1,31 +1,34 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
-   
-    <div class="card-wrapper">
-
-        <div class="card">
-    
-          <h1 class="center">Create an Account</h1>
-    
-          <form name="signup_form">
-    
-            <label for="name">Name</label>
-            <input type="text" name="name" class="field" required>
-    
-            <label for="email">Email</label>
-            <input type="email" name="email" class="field" required>
-    
-            <label for="password">Password</label>
-            <input type="password" name="password" class="field" required>
-    
-            <p class="error error--hidden"></p>
-            
-            <input type="submit" value="Sign Up" class="btn" on>
-          
-          </form>
-          
+<div class="container mt-5">
+    <h2>Sign Up</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label>Student Number</label>
+            <input type="text" name="student_num" class="form-control" required>
         </div>
-      
-      </div>
+        <div class="mb-3">
+            <label>First Name</label>
+            <input type="text" name="student_fname" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Last Name</label>
+            <input type="text" name="student_lname" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="student_email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Qualification</label>
+            <input type="text" name="student_quali" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Password</label>
+            <input type="password" name="student_password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Sign Up</button>
+    </form>
+</div>
 {% endblock %}

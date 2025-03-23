@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    
+    <!-- Button to Add New Lost Item -->
+    <a href="{{ url_for('add_lost_item') }}" class="btn btn-success mb-4">Add New Lost Item</a>
+
+    <!-- Lost Items Section -->
+    <h2>Lost Items</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in lost_items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{item.image_url}}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.status }}</td>
+          <td>
+            <!-- Removed the edit_lost_item reference -->
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Found Items Reports Section -->
+    <h2>Found Items Reports</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Location</th>
+          <th>Reported By</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in found_reports %}
+        <tr>
+          <td>{{ report.item_name }}</td>
+          <td>{{ report.location }}</td>
+          <td>{{ report.reported_by }}</td>
+          <td>
+            <a href="{{ url_for('verify_found_item', report_id=report.id) }}">Verify</a> | 
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Claims Section -->
+    <h2>Claims</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Claimed Item</th>
+          <th>Claimed By</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for claim in claims %}
+        <tr>
+          <td>{{ claim.item.name }}</td>
+          <td>{{ claim.student_name }}</td>
+          <td>
+            <a href="{{ url_for('approve_claim', claim_id=claim.id) }}">Approve</a> | 
+            <a href="{{ url_for('reject_claim', claim_id=claim.id) }}">Reject</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
