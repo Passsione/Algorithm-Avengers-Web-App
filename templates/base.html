@@ -30,8 +30,8 @@
             {% if not session['email'] %}  
                 <a href="{{ url_for('login') }}">Login</a>
             {% else%}
-                <img src="" alt="profile">
-                <div class="flex-col" style="display: none;" >
+                <img src="" alt="profile_img">
+                <div class="flex-col card" style="display: none;" >
                     <h5>Profile: {{current_user['student_fname'] or 'Admin'}}</h5>
                     
                     {%if current_user.is_authenticated %}
