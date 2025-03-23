@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Found Item</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Report Found Item</h1>
+        <form id="reportForm">
+            <!-- Student Details -->
+            <label for="studentName">Your Name:</label>
+            <input type="text" id="studentName" name="studentName" required>
+
+            <label for="studentNumber">Student Number (8 digits):</label>
+            <input type="text" id="studentNumber" name="studentNumber" pattern="\d{8}" title="Student number must be 8 digits" required>
+
+            <!-- Item Details -->
+            <label for="itemType">Item Type:</label>
+            <select id="itemType" name="itemType" required>
+                <option value="">Select item type</option>
+                <option value="wallet">Wallet</option>
+                <option value="phone">Phone</option>
+                <option value="laptop">Laptop</option>
+                <option value="keys">Keys</option>
+                <option value="bag">Bag</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="location">Location Found:</label>
+            <input type="text" id="location" name="location" placeholder="e.g., Library, Cafeteria" required>
+
+            <label for="dateTime">Date and Time Found:</label>
+            <input type="datetime-local" id="dateTime" name="dateTime" required>
+
+            <!-- Description or Image Upload -->
+            <label>How would you like to describe the item?</label>
+            <div class="option-group">
+                <input type="radio" id="descriptionOption" name="descriptionType" value="description" checked>
+                <label for="descriptionOption">Write a Description</label>
+                <input type="radio" id="imageOption" name="descriptionType" value="image">
+                <label for="imageOption">Upload an Image</label>
+            </div>
+
+            <!-- Description Textarea -->
+            <div id="descriptionSection">
+                <label for="itemDescription">Item Description:</label>
+                <textarea id="itemDescription" name="itemDescription" rows="4" placeholder="Provide a detailed description of the item"></textarea>
+            </div>
+
+            <!-- Image Upload Section -->
+            <div id="imageSection" class="hidden">
+                <label for="uploadImage">Upload Image of Item:</label>
+                <input type="file" id="uploadImage" name="uploadImage" accept="image/*">
+            </div>
+
+            <button type="submit">Report Item</button>
+        </form>
+
+        <!-- Confirmation Message -->
+        <div id="confirmationMessage" class="hidden">
+            <p>Thank you for reporting!</p>
+            <p>Item Number is: <strong id="itemNumberDisplay"></strong></p>
+            <p>Please take the item to <strong>Steve Biko Campus, Room BC1104 Admin Desk</strong>.</p>
+            <p>Operating Hours: Monday to Friday, 08:00 to 15:00.</p>
+            <p>You will receive an email confirmation shortly.</p>
+        </div>
+    </div>
+</body>
+</html>
