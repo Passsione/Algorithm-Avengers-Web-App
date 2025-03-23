@@ -25,8 +25,7 @@
             {%endif%}
             {% if not session['email'] %}  
             <li><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
-            {% if session['email'] %}
+            {% else%}
                 <div> 
                     {{session['email']}}
                     <a href="{{ url_for('logout') }}">Logout</a>

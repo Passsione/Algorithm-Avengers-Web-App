@@ -39,10 +39,6 @@ ADMIN_PASSWORD = "admin123"
 # Regex for email and student number validation
 EMAIL_REGEX = r'^\d{8}@dut4life\.ac\.za$'
 STUDENT_NUMBER_REGEX = r'^\d{8}$'
-
-
-
-
 # Routes
 
 

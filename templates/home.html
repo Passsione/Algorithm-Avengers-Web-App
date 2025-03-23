@@ -25,8 +25,10 @@
                         <h5 class="card-title">{{ item.item_name }}</h5>
                         <p class="card-text">{{ item.item_desc[:100] }}...</p>
                         {%if current_user.is_authenticated%}
-                        <a href="{{ url_for('report_found', item_id=item.item_id) }}" class="btn btn-warning">Report Item</a>
                         <a href="{{ url_for('claim_item', item_id=item.item_id) }}" class="btn btn-success">Claim Item</a>
+                        {%elif session['email'] %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-success">Item Profile</a>
+
                         {%endif%}
                     </div>
                 </div>
