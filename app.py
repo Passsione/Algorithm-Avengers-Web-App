@@ -1,11 +1,14 @@
 from flask import *
-from models import db, 
+from models import db, Admin, Item, category, report, student, claimedItem
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db' # sir's videos
 
 # db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 
 # Routes
