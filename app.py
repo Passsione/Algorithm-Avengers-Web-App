@@ -199,7 +199,7 @@ def claim_item(item_id):
         db.session.commit()
         flash("You have successfully claimed the item.", "success")
         return redirect(url_for('home'))
-    
+
 #//////////////////////////////////////////////End of the student/////////////////////////////////////////////////////////////
 
 

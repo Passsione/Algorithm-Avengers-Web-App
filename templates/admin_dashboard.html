@@ -9,34 +9,27 @@
 
     <!-- Lost Items Section -->
     <h2>Lost Items</h2>
-    <div class="flex card">
-      
-      <div class="flex">
+    <div class="card admin-dash">
         <h5>Item Name</h5>
         <h5>Description</h5>
         <h5>Status</h5>
         <h5>Image</h5>
-      </div>
-      
+
       {% for item in lost_items %}
-      
-      <div class="flex">
-        
-        <span>{{ item.name }}</span>
-        <span>{{ item.description }}</span>
-        <span>{{ item.status }}</span>
+
+        <span id="{{item.item_id}}">{{ item.item_name }}</span>
+        <div class="flex desc">
+        <span>{{ item.item_desc }}</span>
+        </div>
+        <span>{{ item.status.value }}</span>
         <span><img src="{{item.image_url}}" alt="item_img"></span>
-        
-          <!-- Removed the edit_lost_item reference -->
-      
-      </div>
       {% endfor %}
       
     </div>
 
     <!-- Found Items Reports Section -->
     <h2>Found Items Appointments</h2>
-    <div class="flex card">
+    <div class="card admin-dash">
       <div class="flex">
         <h5>Item Name</h5>
         <h5>Location</h5>
@@ -48,7 +41,7 @@
       
       <div class="flex">
         
-        <span>{{ report.item_name }}</span>
+        <span id="{{report.report_id}}">{{ report.item_name }}</span>
         <span>{{ report.location }}</span>
         <span>{{ report.reported_by }}</span>
         <span><a href="{{ url_for('verify_found_item', report_id=report.id) }}">Verify</a></span>
@@ -56,10 +49,11 @@
       </div>
       {% endfor %}
     </div>
+
+
     <!-- Claims Section -->
     <h2>Claims</h2>
-          
-    <div class="flex card">
+    <div class="card admin-claim">
       <div class="flex">
         <h5>Claimed Item</h5>
         <h5>Claimed By</h5>
@@ -68,16 +62,14 @@
 
       {% for claim in claims %}
       
-      <div class="flex">
-        
-        <span>{{ claim.item.name }}</span>
+        <span id="{{claim.claimed_item_id}}">{{ claim.item.name }}</span>
         <span>{{ claim.student_name }}</span>
         <span>{{ item.status }}</span>
         <div>
           <a href="{{ url_for('approve_claim', claim_id=claim.id) }}">Approve</a> | 
           <a href="{{ url_for('reject_claim', claim_id=claim.id) }}">Reject</a>
         </div>   
-      </div>
+      
       {% endfor %}
     </div>
   </div>

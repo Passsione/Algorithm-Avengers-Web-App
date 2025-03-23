@@ -27,7 +27,7 @@
                         {%if current_user.is_authenticated%}
                         <a href="{{ url_for('claim_item', item_id=item.item_id) }}" class="btn btn-success">Claim Item</a>
                         {%else%}
-                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-success">Item Profile</a>
+                        <a href="{{ url_for('admin_dashboard')}}#{{item.item_id}}" class="btn btn-success">Item Profile</a>
 
                         {%endif%}
                     </div>
