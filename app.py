@@ -101,6 +101,7 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'POST':
         student_email = request.form['student_email']
         student_password = request.form['student_password']
@@ -112,6 +113,7 @@ def login():
 
         # Check admin credentials
         if student_email == ADMIN_EMAIL and student_password == ADMIN_PASSWORD:
+            # login_user(Admin)
             session['user_type'] = 'admin'
             session['email'] = student_email
             flash("Welcome, Admin!", "success")
@@ -124,9 +126,10 @@ def login():
             session['user_type'] = 'student'
             session['email'] = student_email
             flash("Login successful!", "success")
-            return redirect(url_for('home'))
+            return redirect(url_for('home') )
 
         flash("Invalid email or password. Please try again.", "danger")
+    
 
     return render_template('login.html')
 
@@ -331,12 +334,13 @@ def contact():
 
 
 @app.route('/logout')  #this is the logout route
-@login_required
+# @login_required # if uncommented, admin can't log out
 def logout():
     logout_user()  # Log out the user using Flask-Login
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for('home'))
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

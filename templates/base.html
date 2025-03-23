@@ -17,12 +17,23 @@
         <ul class="navbar">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+            
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            
             {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+            {%endif%}
+            {% if not session['email'] %}  
+            <li><a href="{{ url_for('login') }}">Login</a></li>
             {% endif %}
+            {% if session['email'] %}
+                <div> 
+                    {{session['email']}}
+                    <a href="{{ url_for('logout') }}">Logout</a>
+
+                </div>
+            {% endif %}
+
         </ul>
     </nav>
 
