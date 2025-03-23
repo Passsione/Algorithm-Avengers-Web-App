@@ -39,8 +39,9 @@ ADMIN_PASSWORD = "admin123"
 # Regex for email and student number validation
 EMAIL_REGEX = r'^\d{8}@dut4life\.ac\.za$'
 STUDENT_NUMBER_REGEX = r'^\d{8}$'
-# Routes
 
+
+# Routes
 
 @app.route('/')
 def home():
@@ -155,7 +156,7 @@ def report_found(item_id):
         campus = request.form['campus']
         block = request.form['block']
         item_features = request.form['item_features']
-
+        
         # Create the new found item report
         new_found_report = Report(
             student_num=current_user.student_num,  # Use current_user from Flask-Login
@@ -187,18 +188,18 @@ def claim_item(item_id):
     if existing_claim:
         flash("You have already claimed this item.", "warning")
         return redirect(url_for('home'))
+    if request.method == 'POST':
+        new_claim = ClaimedItem(
+            student_num=current_user.student_num,
+            item_id=item_id,
+            approval=False  # Initially not approved
+        )
 
-    new_claim = ClaimedItem(
-        student_num=current_user.student_num,
-        item_id=item_id,
-        approval=False  # Initially not approved
-    )
-
-    db.session.add(new_claim)
-    db.session.commit()
-    flash("You have successfully claimed the item.", "success")
-    return redirect(url_for('home'))
-
+        db.session.add(new_claim)
+        db.session.commit()
+        flash("You have successfully claimed the item.", "success")
+        return redirect(url_for('home'))
+    
 #//////////////////////////////////////////////End of the student/////////////////////////////////////////////////////////////
 
 
@@ -267,7 +268,6 @@ def add_lost_item():
     categories = Category.query.all()  # Fetch categories for dropdown
     return render_template('add_lost_item.html', categories=categories)
 
-
 @app.route('/verify_found_item/<int:report_id>', methods=['GET'])   #This is for verifying the item
 def verify_found_item(report_id):
     if 'email' not in session or session['email'] != ADMIN_EMAIL:  # Check if admin is logged in
@@ -327,6 +327,7 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 
 @app.route('/logout')  #this is the logout route
