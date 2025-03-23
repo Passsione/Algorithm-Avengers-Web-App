@@ -1,76 +1,119 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container">
+  <div class="container" data-tab="claim">
     <h1>Admin Dashboard</h1>
     
     <!-- Button to Add New Lost Item -->
-    <a href="{{ url_for('add_lost_item') }}" class="btn btn-success mb-4">Add New Lost Item</a>
+    <div class="acts">     
+      <a href="{{url_for('add_lost_item')}}" class="btn btn-success mb-4">Add New Lost Item</a>
+      <button id="claim" class="btn btn-success mb-4">View Claims</button>
+      <button id="appointments" class="btn btn-success mb-4">View Appointments</button>
+      <button id="lost_items" class="btn btn-success mb-4">All Lost Items</button>
+    </div>
 
-    <!-- Lost Items Section -->
-    <h2>Lost Items</h2>
-    <div class="card admin-dash">
+    <div id="claim" ><!-- Claims Section -->
+      <h2>Claims</h2>
+      <div class="card admin-dash">
+        <h5>Item ID</h5>
+        <h5>Claimed Item</h5>
+        <h5>Claimed By</h5>
+        <h5>Desc</h5>
+        <h5>Action</h5>
+        
+        <span>2</span>
+        <span>Glass Bottle</span>
+        <span>22323809</span>
+        <div>
+          
+          <div id="claim-desc" class="desc flex">
+            <div style="justify-content: center;">
+              
+              Pink, Glass bottle
+            </div>
+            
+            <div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a href="\">Approve</a> | 
+          <a href="">Reject</a>
+        </div>   
+
+        {% for claim in claims %}
+
+          <span id="{{claim.claimed_item_id}}">{{claim.claimed_item_id}}</span>
+          <span>{{ claim.item.name }}</span>
+          <span>{{ claim.student_num }}</span>
+          <div>
+            <span>Description</span>
+            <div id="claim-desc-{{claim.claimed_item_id}}" class="desc flex" style="display: none;">
+              <div>
+                Claimer's description
+                {{claim.description}}
+              </div>
+              <a href="#item-desc-{{claim.item_id}} t">See the provided description?</a>
+              <div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <a href="{{ url_for('approve_claim', claim_id=claim.id) }}">Approve</a> | 
+            <a href="{{ url_for('reject_claim', claim_id=claim.id) }}">Reject</a>
+          </div>   
+        
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Found Items Reports Section -->
+    
+    <div id="appointments">
+      <h2>Found Items Appointments</h2>
+      <div  class="card admin-dash">
+        <div class="flex">
+          <h5>Item ID</h5>
+          <h5>Item Name</h5>
+          <h5>Location</h5>
+          <h5>Reported By</h5>
+          <h5>Action</h5>
+        </div>
+        
+        {% for report in found_reports %}
+
+        <span id="{{report.report_id}}">{{report.report_id}}</span>
+        <span>{{ report.item_name }}</span>
+        <span>{{ report.location }}</span>
+        <span>{{ report.reported_by }}</span>
+        <span><a href="{{ url_for('verify_found_item', report_id=report.id) }}">Verify</a></span>
+        
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="lost_items"><!-- Lost Items Section -->
+      <h2>Lost Items</h2>
+      <div class="card admin-dash">
+        <h5>Item ID</h5>
         <h5>Item Name</h5>
         <h5>Description</h5>
         <h5>Status</h5>
         <h5>Image</h5>
 
-      {% for item in lost_items %}
+        {% for item in lost_items %}
 
-        <span id="{{item.item_id}}">{{ item.item_name }}</span>
-        <div class="flex desc">
-        <span>{{ item.item_desc }}</span>
-        </div>
-        <span>{{ item.status.value }}</span>
-        <span><img src="{{item.image_url}}" alt="item_img"></span>
-      {% endfor %}
-      
-    </div>
-
-    <!-- Found Items Reports Section -->
-    <h2>Found Items Appointments</h2>
-    <div class="card admin-dash">
-      <div class="flex">
-        <h5>Item Name</h5>
-        <h5>Location</h5>
-        <h5>Reported By</h5>
-        <h5>Action</h5>
-      </div>
-      
-      {% for report in found_reports %}
-      
-      <div class="flex">
+          <span>{{item.item_id}}</span>
+          <span id="{{item.item_id}}">{{ item.item_name }}</span>
+          <div class="flex desc" id="item-desc-{{item.item_id}}">
+          <span>{{ item.item_desc }}</span>
+          </div>
+          <span>{{ item.status.value }}</span>
+          <div>
+            <img src="../static/images/{{item.image_url}}" alt="item_img">
+          </div>
+        {% endfor %}
         
-        <span id="{{report.report_id}}">{{ report.item_name }}</span>
-        <span>{{ report.location }}</span>
-        <span>{{ report.reported_by }}</span>
-        <span><a href="{{ url_for('verify_found_item', report_id=report.id) }}">Verify</a></span>
-      
       </div>
-      {% endfor %}
-    </div>
-
-
-    <!-- Claims Section -->
-    <h2>Claims</h2>
-    <div class="card admin-claim">
-      <div class="flex">
-        <h5>Claimed Item</h5>
-        <h5>Claimed By</h5>
-        <h5>Action</h5>
-      </div>
-
-      {% for claim in claims %}
-      
-        <span id="{{claim.claimed_item_id}}">{{ claim.item.name }}</span>
-        <span>{{ claim.student_name }}</span>
-        <span>{{ item.status }}</span>
-        <div>
-          <a href="{{ url_for('approve_claim', claim_id=claim.id) }}">Approve</a> | 
-          <a href="{{ url_for('reject_claim', claim_id=claim.id) }}">Reject</a>
-        </div>   
-      
-      {% endfor %}
     </div>
   </div>
 

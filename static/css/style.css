@@ -126,9 +126,19 @@ textarea{
 
 /* Mogale */
 
+.acts{
+    display: flex;
+    /* width: 100%; */
+    position: sticky;
+    align-items: center;
+    justify-items: center;
+    justify-self: center;
+    align-self: center ;
+    column-gap: 3rem;
+}
 .admin-dash{
     display: grid;
-    grid-template: auto / auto auto auto auto;
+    grid-template: auto / auto auto auto auto auto;
     align-items: center;
     justify-items: center ;
     position: relative;
@@ -145,7 +155,7 @@ textarea{
 
 .admin-claim{
     display: grid;
-    grid-template: auto / auto auto auto ;
+    grid-template: auto / auto auto auto auto ;
     align-items: center;
     justify-items: center ;
     position: relative;
