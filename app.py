@@ -1,4 +1,5 @@
 import re, os
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from models import *
@@ -6,7 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static/uploads')
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -223,9 +228,9 @@ def admin_dashboard():
                            found_reports=found_reports, 
                            claims=claims)
 
-@app.route('/add_lost_item', methods=['GET', 'POST'])          #The admin can add lost item to the system
+@app.route('/add_lost_item', methods=['GET', 'POST'])
 def add_lost_item():
-    if 'email' not in session or session['email'] != ADMIN_EMAIL:  # Check if admin is logged in
+    if 'email' not in session or session['email'] != ADMIN_EMAIL:
         flash("Please log in as admin to access this page.", "warning")
         return redirect(url_for('login'))
 
@@ -233,7 +238,7 @@ def add_lost_item():
         item_name = request.form.get('name')
         item_desc = request.form.get('description')
         category_id = request.form.get('category_id')  
-        status = ItemStatus.AVAILABLE  # This is the default status for the item
+        status = ItemStatus.AVAILABLE
         
         # Validate input
         if not item_name or not item_desc:
@@ -265,7 +270,7 @@ def add_lost_item():
 
         return redirect(url_for('admin_dashboard'))  
 
-    categories = Category.query.all()  # Fetch categories for dropdown
+    categories = Category.query.all()
     return render_template('add_lost_item.html', categories=categories)
 
 @app.route('/verify_found_item/<int:report_id>', methods=['GET'])   #This is for verifying the item
