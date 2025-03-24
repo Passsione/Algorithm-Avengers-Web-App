@@ -12,6 +12,7 @@ select{
 .navbar{
     display: flex;
     padding-left: 2rem;
+    position: fixed;
 }
 
 textarea{
