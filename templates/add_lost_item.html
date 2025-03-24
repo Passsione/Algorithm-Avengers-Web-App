@@ -14,7 +14,7 @@
     {% endwith %}
     
     <!-- Form for adding a new lost item -->
-    <form method="POST" class="card">
+    <form method="POST" enctype="multipart/form-data" class="card">
       <div class="form-group">
         <label for="name">Item Name</label>
         <input type="text" class="form-control" id="name" name="name" required>
@@ -39,7 +39,7 @@
       <!-- Image URL input (optional) -->
       <div class="form-group">
         <label for="image_url">Image URL</label>
-        <input type="file" class="form-control" id="image_url" name="image_url">
+        <input type="file" class="form-control" id="image" name="image">
       </div>
 
       <button type="submit" class="btn btn-primary">Post Item</button>
