@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lost and Found</title>
-   <!-- Bootstrap CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-   <!-- Bootstrap JavaScript -->
+    <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
@@ -18,48 +18,47 @@
     <nav>
         <div class="navbar">
             <div><a href="{{ url_for('home') }}">Home</a></div>
-            <!-- <div><a href="{{ url_for('about') }}">About</a></div>
-            <div><a href="{{ url_for('contact') }}">Contact</a></div> -->
             
             {% if current_user.is_authenticated %}
-            <div class="stu-dash"><a href="{{ url_for('student_dashboard') }}">Dashboard</a></div>
-
-            {%endif%}
-            <div class="profile">
-
-            {% if not session['email'] %}  
-                <a href="{{ url_for('login') }}">Login</a>
-            {% else%}
-                <img src="" alt="profile_img">
-                <div class="flex-col card" style="display: none;" >
-                    <h5>Profile: {{current_user['student_fname'] or 'Admin'}}</h5>
-                    
-                    {%if current_user.is_authenticated %}
-                    <div class="noti">
-                        <!-- for each  notification check allow to be deleted-->
-
-                    </div>
-                    {% endif %}
-
-                    <a href="{{ url_for('logout') }}">Logout</a>
-                </div>
+                <!-- Show Dashboard for Students -->
+                <div class="stu-dash"><a href="{{ url_for('student_dashboard') }}">Dashboard</a></div>
+                
+                <!-- Always show "Report Item" for students, regardless of available items -->
+                <div class="report-item"><a href="{{ url_for('report_found', item_id=1) }}">Report Item</a></div> 
             {% endif %}
-            </div>
+            
+            <div class="profile">
+                {% if not session.get('email') %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                     <img src="" alt="profile_img"> 
+                    <div class="flex-col card" style="display: none;">
+                        <h5>Profile: {{ current_user.student_fname or 'Admin' }}</h5>
+                        
+                        {% if current_user.is_authenticated %}
+                        <div class="noti">
+                            <!-- Add notifications if needed -->
+                        </div>
+                        {% endif %}
 
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
     {% block content %}
-  
     {% endblock %}
 
     <!-- Footer -->
     <footer>
         <div class="footer flex">
-          <a href ="{{ url_for('about') }}">About Us</a>
-          <a href ="{{ url_for('contact') }}">Contact</a>
+          <a href="{{ url_for('about') }}">About Us</a>
+          <a href="{{ url_for('contact') }}">Contact</a>
         </div>
     </footer>
+
     <script src="../static/JS/script.js"></script>
 
 </body>

@@ -122,7 +122,7 @@ def login():
             session['user_type'] = 'student'
             session['email'] = student_email
             flash("Login successful!", "success")
-            return redirect(url_for('home') )
+            return redirect(url_for('student_dashboard') )
 
         flash("Invalid email or password. Please try again.", "danger")
     
@@ -131,34 +131,51 @@ def login():
 
 
 
-#///////////////////////////////////////////////////////For the student///////////////////////////////////////////////////////////////
-@app.route('/student_dashboard')
+#///////////////////////////////////////////////////////Start of  the student///////////////////////////////////////////////////////////////
+@app.route('/student_dashboard', methods=['GET'])
 @login_required
 def student_dashboard():
-    student = current_user  # Use current_user from Flask-Login
+    student = current_user
     reports = Report.query.filter_by(student_num=student.student_num).all()
-    notifications = Notification.query.filter_by(user_type='student', user_id=student.student_num).all()
-    chat_messages = ChatMessage.query.filter_by(student_num=student.student_num).all()
 
-    return render_template('student_dashboard.html', 
-                           reports=reports, 
-                           notifications=notifications, 
-                           chat_messages=chat_messages)
+    # Get all categories
+    categories = Category.query.all()
 
-@app.route('/report_found/<int:item_id>', methods=['POST', 'GET'])
+    # Get the selected category from the query string
+    selected_category = request.args.get('category')
+
+    # Get items filtered by category if selected
+    if selected_category:
+        items = Item.query.filter_by(category_id=selected_category).all()
+    else:
+        items = Item.query.all()  # Show all items if no category is selected
+    
+    # Group items by category for display
+    items_grouped_by_category = {}
+    for item in items:
+        if item.category not in items_grouped_by_category:
+            items_grouped_by_category[item.category] = []
+        items_grouped_by_category[item.category].append(item)
+
+    return render_template('student_dashboard.html', reports=reports, items_grouped_by_category=items_grouped_by_category, categories=categories)
+
+
+#for student to report found items
+@app.route('/report_found/<int:item_id>', methods=['GET', 'POST'])
 @login_required
 def report_found(item_id):
     item = Item.query.get_or_404(item_id)
 
     if request.method == 'POST':
+        # Get form data
         location = request.form['location']
         campus = request.form['campus']
         block = request.form['block']
         item_features = request.form['item_features']
 
-        # Create the new found item report
-        new_found_report = Report(
-            student_num=current_user.student_num,  # Use current_user from Flask-Login
+        # Create a new report for the found item
+        new_report = Report(
+            student_num=current_user.student_num,  # Get the current student's ID
             item_id=item_id,
             location=location,
             campus=campus,
@@ -166,22 +183,31 @@ def report_found(item_id):
             item_features=item_features
         )
 
-        db.session.add(new_found_report)
+        # Add the report to the database
+        db.session.add(new_report)
         db.session.commit()
 
-        # Update the item status
+        # Update the item's status to 'FOUND'
         item.status = ItemStatus.FOUND
         db.session.commit()
 
         flash("Your found item report has been submitted. Admin will review it.", "success")
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))  # Redirect to the home page or any other page
 
-    return render_template('report_found_item.html', item=item)
+    # Render the page with the item details
+    return render_template('report_item.html', item=item)
 
-@app.route('/claim/<int:item_id>', methods=['POST'])
+
+
+@app.route('/claim/<int:item_id>', methods=['GET','POST'])
 @login_required
 def claim_item(item_id):
+    print(f"Claim request received for item_id: {item_id}")  # Debugging line
+    
     item = Item.query.get_or_404(item_id)
+    if item:
+        print(f"Item found: {item.item_name}")  # Debugging line
+
     existing_claim = ClaimedItem.query.filter_by(item_id=item_id, student_num=current_user.student_num).first()
 
     if existing_claim:
@@ -197,7 +223,11 @@ def claim_item(item_id):
     db.session.add(new_claim)
     db.session.commit()
     flash("You have successfully claimed the item.", "success")
+
+    print(f"Item {item_id} claimed by {current_user.student_num}")  # Debugging line
     return redirect(url_for('home'))
+
+
 
 #//////////////////////////////////////////////End of the student/////////////////////////////////////////////////////////////
 
@@ -214,7 +244,7 @@ def admin_dashboard():
     
     # Fetch data for the admin dashboard
     lost_items = Item.query.all()
-    found_reports = FoundItemReport.query.all()
+    found_reports = Report.query.all()
     claims = ClaimedItem.query.all()
     
     return render_template('admin_dashboard.html', 

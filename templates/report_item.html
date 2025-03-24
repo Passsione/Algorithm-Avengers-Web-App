@@ -1,38 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Report Found Item</title>
-</head>
-<body>
-    <h1>Report Found Item: {{ item.item_name }}</h1>
+{% extends 'base.html' %}
 
-    <!-- Flash message -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <p class="alert alert-{{ category }}">{{ message }}</p>
-                {% endfor %}
+{% block content %}
+    <div class="container">
+        <h1>Report Found Item: {{ item.item_name }}</h1>  <!-- Displaying item name -->
+
+        <!-- Flash message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="alert alert-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Form to report found item -->
+        <form method="POST">
+            <div class="mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" name="location" class="form-control" required><br>
             </div>
-        {% endif %}
-    {% endwith %}
 
-    <!-- Form to report found item -->
-    <form method="POST">
-        <label for="location">Location:</label>
-        <input type="text" name="location" required><br>
+            <div class="mb-3">
+                <label for="campus" class="form-label">Campus:</label>
+                <input type="text" name="campus" class="form-control" required><br>
+            </div>
 
-        <label for="campus">Campus:</label>
-        <input type="text" name="campus" required><br>
+            <div class="mb-3">
+                <label for="block" class="form-label">Block:</label>
+                <input type="text" name="block" class="form-control" required><br>
+            </div>
 
-        <label for="block">Block:</label>
-        <input type="text" name="block" required><br>
+            <div class="mb-3">
+                <label for="item_features" class="form-label">Item Features:</label>
+                <textarea name="item_features" class="form-control" required></textarea><br>
+            </div>
 
-        <label for="item_features">Item Features:</label>
-        <textarea name="item_features" required></textarea><br>
-
-        <button type="submit">Submit Report</button>
-    </form>
-</body>
-</html>
+            <button type="submit" class="btn btn-primary">Submit Report</button>
+        </form>
+    </div>
+{% endblock %}

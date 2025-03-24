@@ -54,15 +54,26 @@ class Report(db.Model):
     student = db.relationship('Student', backref=db.backref('reports', lazy=True))
     item = db.relationship('Item', backref=db.backref('reports', lazy=True))
 
+    @property
+    def item_name(self):
+        return self.item.item_name if self.item else None
+    
 class ClaimedItem(db.Model):
-    __tablename__ = 'claimed_item'
-    claimed_item_id = db.Column(db.Integer, primary_key=True)
-    student_num = db.Column(db.String(8), db.ForeignKey('student.student_num'), nullable=False)
+    __tablename__ = 'claimed_items'
+    id = db.Column(db.Integer, primary_key=True)
+    student_num = db.Column(db.String(8), db.ForeignKey('student.student_num'), nullable=False)  # Corrected foreign key
     item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
-    approval = db.Column(db.Boolean, nullable=False, default=False)
-    description = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    approval = db.Column(db.Boolean, default=False)
+    location = db.Column(db.String(200), nullable=False)
+    campus = db.Column(db.String(100), nullable=False)
+    block = db.Column(db.String(100), nullable=False)
+    item_features = db.Column(db.Text, nullable=True)
+
+    # New fields for verification
+    campus_location = db.Column(db.String(100))  # Campus location (e.g., North Campus)
+    block_location = db.Column(db.String(100))   # Block location (e.g., Block A)
+    item_description = db.Column(db.String(500)) # Detailed item description
+    proof_file = db.Column(db.String(100))       # Proof file (image)
 
     student = db.relationship('Student', backref=db.backref('claimed_items', lazy=True))
     item = db.relationship('Item', backref=db.backref('claimed_items', lazy=True))

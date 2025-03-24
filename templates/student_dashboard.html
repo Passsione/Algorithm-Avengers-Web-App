@@ -1,45 +1,52 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="student-dashboard">
-    <!-- Notifications Section -->
-    <div class="notifications">
-        <h3>Notifications</h3>
-        {% for notification in notifications %}
-            <div class="notification">
-                <p>{{ notification.message }}</p>
-                <span>{{ notification.created_at }}</span>
-                {% if not notification.read %}
-                    <a href="/mark_notification_read/{{ notification.notification_id }}">Mark as Read</a>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
+<div class="container text-center mt-5">
+    <h1>Welcome to Your Student Dashboard</h1>
+    <p>Find and claim lost items easily.</p>
 
-    <!-- Found Item Reports Section -->
-    <div class="found-reports">
-        <h3>Your Found Item Reports</h3>
-        {% for report in reports %}
-            <div class="report">
-                <p>{{ report.item_name }} (ID: {{ report.report_id }})</p>
-                <a href="/chat/{{ report.report_id }}">Chat with Admin</a>
-            </div>
-        {% endfor %}
-    </div>
+    <!-- Category Dropdown Form -->
+    <form method="GET" class="mb-4">
+        <label for="category">Select Category:</label>
+        <select name="category" id="category" class="form-select" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == request.args.get('category') %}selected{% endif %}>
+                    {{ category.category_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
 
-    <!-- Chat Section -->
-    <div class="chat">
-        <h3>Chat Room</h3>
-        {% for message in chat_messages %}
-            <div class="chat-message">
-                <p>{{ message.message_text }}</p>
-                <span>{{ message.timestamp }}</span>
+    <!-- Display Lost Items Based on Selected Category -->
+    <h2>Available Lost Items</h2>
+
+    <!-- Loop through the grouped items by category -->
+    {% for category, items_in_category in items_grouped_by_category.items() %}
+        <!-- Only display if category is selected or if all categories are chosen -->
+        {% if request.args.get('category') == "" or request.args.get('category') == category.id %}
+            <h3>{{ category.category_name }}</h3>
+            <div class="row">
+                <!-- Loop through items belonging to the current category -->
+                {% for item in items_in_category %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <!-- Use a default image if no image is provided -->
+                            <img src="{{ url_for('static', filename=item.image_url if item.image_url else 'default-image.jpg') }}" alt="{{ item.item_name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.item_name }}</h5>
+                                <p class="card-text">{{ item.item_desc[:100] if item.item_desc else 'No description available.' }}</p>
+
+                                <!-- Claim Button -->
+                                <form action="{{ url_for('claim_item', item_id=item.item_id) }}" method="POST">
+                                    <button type="submit" class="btn btn-success">Claim Item</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-        <form action="/send_message" method="POST">
-            <textarea name="message_text" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </div>
+        {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}
