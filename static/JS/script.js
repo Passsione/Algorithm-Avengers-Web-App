@@ -10,19 +10,28 @@ profile.addEventListener("click", ()=> {        // Open and closes the profile l
 })
 
 
-// var adminTasks = document.querySelectorAll(".container .admin-dash")
-// var container = adminTasks[0].parentElement
-// var action = document.querySelectorAll(".container .acts")
+var adminTasks = document.querySelectorAll(".container .admin-dash")
+var action = document.querySelector(".container .acts")
+var container = action.parentElement
 
-//     adminTasks.forEach( (at) => {
-//         at.addEventListener("click", () =>{
-//             if(container.dataset.tab != at.id){
-//                 at.style.display = 'none'
-//             }else{at.style.display = 'grid'}
-//         })
-//     });
 
-//     action.addEventListener("click", () =>{
+
+for(let i = 0; i < adminTasks.length; i++){
+    var at = adminTasks[i]
+    at.addEventListener("click", () =>{
+        console.log(at.parentElement.id)
+        container.dataset.tab = at.parentElement.id
+    }) 
+}
+addEventListener("click", () =>{
+    
         
-//     })
+    adminTasks.forEach((at) => {
+        if(at.parentElement.id != container.dataset.tab){
+            at.parentElement.style.display = 'none'
+        }else{
+            at.parentElement.style.display = 'block'
+        }
+    }); 
+})
 
