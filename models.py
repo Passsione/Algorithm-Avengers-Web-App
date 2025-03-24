@@ -88,4 +88,3 @@ class FoundItemReport(db.Model):
 
     student = db.relationship('Student', backref=db.backref('found_reports', lazy=True))
     item = db.relationship('Item', backref=db.backref('found_reports', lazy=True))
-

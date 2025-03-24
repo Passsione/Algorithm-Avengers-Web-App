@@ -6,10 +6,10 @@
     
     <!-- Button to Add New Lost Item -->
     <div class="acts">     
-      <a href="{{url_for('add_lost_item')}}" class="btn btn-success mb-4">Add New Lost Item</a>
-      <button id="claim" class="btn btn-success mb-4">View Claims</button>
-      <button id="appointments" class="btn btn-success mb-4">View Appointments</button>
-      <button id="lost_items" class="btn btn-success mb-4">All Lost Items</button>
+      <a href="{{url_for('add_lost_item')}}" class="btn btn-outline-primary mb-4">Add New Lost Item</a>
+      <a href="#claim" class="btn btn-outline-primary mb-4">View Claims</a>
+      <a href="#appointments" class="btn btn-outline-primary mb-4">View Appointments</a>
+      <a href="#lost_items" class="btn btn-outline-primary mb-4">All Lost Items</a>
     </div>
 
     <div id="claim" ><!-- Claims Section -->
@@ -48,7 +48,7 @@
           <span>{{ claim.student_num }}</span>
           <div>
             <span>Description</span>
-            <div id="claim-desc-{{claim.claimed_item_id}}" class="desc flex" style="display: none;">
+            <div id="claim-desc-{{claim.claimed_item_id}}" class="desc flex" style="position: absolute; left: 100%;">
               <div>
                 Claimer's description
                 {{claim.description}}
@@ -65,6 +65,7 @@
         
         {% endfor %}
       </div>
+      
     </div>
     <!-- Found Items Reports Section -->
     
@@ -78,6 +79,8 @@
           <h5>Reported By</h5>
           <h5>Action</h5>
         </div>
+
+        
         
         {% for report in found_reports %}
 
@@ -109,8 +112,13 @@
           </div>
           <span>{{ item.status.value }}</span>
           <div>
+            {%if item.image_url%}
             <img src="../static/images/{{item.image_url}}" alt="item_img">
+            {%else%}
+            <span>No image uploaded</span>
+            {%endif%}
           </div>
+          
         {% endfor %}
         
       </div>
