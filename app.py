@@ -1,5 +1,4 @@
 import re, os
-import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from models import *
@@ -7,11 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-UPLOAD_FOLDER = os.path.join(app.root_path, 'static/uploads')
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laf_db.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -44,9 +39,8 @@ ADMIN_PASSWORD = "admin123"
 # Regex for email and student number validation
 EMAIL_REGEX = r'^\d{8}@dut4life\.ac\.za$'
 STUDENT_NUMBER_REGEX = r'^\d{8}$'
-
-
 # Routes
+
 
 @app.route('/')
 def home():
@@ -128,7 +122,7 @@ def login():
             session['user_type'] = 'student'
             session['email'] = student_email
             flash("Login successful!", "success")
-            return redirect(url_for('home') )
+            return redirect(url_for('student_dashboard') )
 
         flash("Invalid email or password. Please try again.", "danger")
     
@@ -137,34 +131,51 @@ def login():
 
 
 
-#///////////////////////////////////////////////////////For the student///////////////////////////////////////////////////////////////
-@app.route('/student_dashboard')
+#///////////////////////////////////////////////////////Start of  the student///////////////////////////////////////////////////////////////
+@app.route('/student_dashboard', methods=['GET'])
 @login_required
 def student_dashboard():
-    student = current_user  # Use current_user from Flask-Login
+    student = current_user
     reports = Report.query.filter_by(student_num=student.student_num).all()
-    notifications = Notification.query.filter_by(user_type='student', user_id=student.student_num).all()
-    chat_messages = ChatMessage.query.filter_by(student_num=student.student_num).all()
 
-    return render_template('student_dashboard.html', 
-                           reports=reports, 
-                           notifications=notifications, 
-                           chat_messages=chat_messages)
+    # Get all categories
+    categories = Category.query.all()
 
-@app.route('/report_found/<int:item_id>', methods=['POST', 'GET'])
+    # Get the selected category from the query string
+    selected_category = request.args.get('category')
+
+    # Get items filtered by category if selected
+    if selected_category:
+        items = Item.query.filter_by(category_id=selected_category).all()
+    else:
+        items = Item.query.all()  # Show all items if no category is selected
+    
+    # Group items by category for display
+    items_grouped_by_category = {}
+    for item in items:
+        if item.category not in items_grouped_by_category:
+            items_grouped_by_category[item.category] = []
+        items_grouped_by_category[item.category].append(item)
+
+    return render_template('student_dashboard.html', reports=reports, items_grouped_by_category=items_grouped_by_category, categories=categories)
+
+
+#for student to report found items
+@app.route('/report_found/<int:item_id>', methods=['GET', 'POST'])
 @login_required
 def report_found(item_id):
     item = Item.query.get_or_404(item_id)
 
     if request.method == 'POST':
+        # Get form data
         location = request.form['location']
         campus = request.form['campus']
         block = request.form['block']
         item_features = request.form['item_features']
-        
-        # Create the new found item report
-        new_found_report = Report(
-            student_num=current_user.student_num,  # Use current_user from Flask-Login
+
+        # Create a new report for the found item
+        new_report = Report(
+            student_num=current_user.student_num,  # Get the current student's ID
             item_id=item_id,
             location=location,
             campus=campus,
@@ -172,38 +183,51 @@ def report_found(item_id):
             item_features=item_features
         )
 
-        db.session.add(new_found_report)
+        # Add the report to the database
+        db.session.add(new_report)
         db.session.commit()
 
-        # Update the item status
+        # Update the item's status to 'FOUND'
         item.status = ItemStatus.FOUND
         db.session.commit()
 
         flash("Your found item report has been submitted. Admin will review it.", "success")
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))  # Redirect to the home page or any other page
 
-    return render_template('report_found_item.html', item=item)
+    # Render the page with the item details
+    return render_template('report_item.html', item=item)
 
-@app.route('/claim/<int:item_id>', methods=['POST'])
+
+
+@app.route('/claim/<int:item_id>', methods=['GET','POST'])
 @login_required
 def claim_item(item_id):
+    print(f"Claim request received for item_id: {item_id}")  # Debugging line
+    
     item = Item.query.get_or_404(item_id)
+    if item:
+        print(f"Item found: {item.item_name}")  # Debugging line
+
     existing_claim = ClaimedItem.query.filter_by(item_id=item_id, student_num=current_user.student_num).first()
 
     if existing_claim:
         flash("You have already claimed this item.", "warning")
         return redirect(url_for('home'))
-    if request.method == 'POST':
-        new_claim = ClaimedItem(
-            student_num=current_user.student_num,
-            item_id=item_id,
-            approval=False  # Initially not approved
-        )
 
-        db.session.add(new_claim)
-        db.session.commit()
-        flash("You have successfully claimed the item.", "success")
-        return redirect(url_for('home'))
+    new_claim = ClaimedItem(
+        student_num=current_user.student_num,
+        item_id=item_id,
+        approval=False  # Initially not approved
+    )
+
+    db.session.add(new_claim)
+    db.session.commit()
+    flash("You have successfully claimed the item.", "success")
+
+    print(f"Item {item_id} claimed by {current_user.student_num}")  # Debugging line
+    return redirect(url_for('home'))
+
+
 
 #//////////////////////////////////////////////End of the student/////////////////////////////////////////////////////////////
 
@@ -220,7 +244,7 @@ def admin_dashboard():
     
     # Fetch data for the admin dashboard
     lost_items = Item.query.all()
-    found_reports = FoundItemReport.query.all()
+    found_reports = Report.query.all()
     claims = ClaimedItem.query.all()
     
     return render_template('admin_dashboard.html', 
@@ -228,9 +252,9 @@ def admin_dashboard():
                            found_reports=found_reports, 
                            claims=claims)
 
-@app.route('/add_lost_item', methods=['GET', 'POST'])
+@app.route('/add_lost_item', methods=['GET', 'POST'])          #The admin can add lost item to the system
 def add_lost_item():
-    if 'email' not in session or session['email'] != ADMIN_EMAIL:
+    if 'email' not in session or session['email'] != ADMIN_EMAIL:  # Check if admin is logged in
         flash("Please log in as admin to access this page.", "warning")
         return redirect(url_for('login'))
 
@@ -238,7 +262,7 @@ def add_lost_item():
         item_name = request.form.get('name')
         item_desc = request.form.get('description')
         category_id = request.form.get('category_id')  
-        status = ItemStatus.AVAILABLE
+        status = ItemStatus.AVAILABLE  # This is the default status for the item
         
         # Validate input
         if not item_name or not item_desc:
@@ -270,8 +294,9 @@ def add_lost_item():
 
         return redirect(url_for('admin_dashboard'))  
 
-    categories = Category.query.all()
+    categories = Category.query.all()  # Fetch categories for dropdown
     return render_template('add_lost_item.html', categories=categories)
+
 
 @app.route('/verify_found_item/<int:report_id>', methods=['GET'])   #This is for verifying the item
 def verify_found_item(report_id):
@@ -332,7 +357,6 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
 
 
 @app.route('/logout')  #this is the logout route
