@@ -100,8 +100,8 @@
         <h5>Item ID</h5>
         <h5>Item Name</h5>
         <h5>Description</h5>
-        <h5>Status</h5>
-        <h5>Image</h5>
+        <h5>Status</h5> 
+        <h5>Image</h5> 
 
         {% for item in lost_items %}
 
@@ -111,6 +111,7 @@
           <span>{{ item.item_desc }}</span>
           </div>
           <span>{{ item.status.value }}</span>
+          
           <div>
             {%if item.image_url%}
             <img src="../static/images/{{item.image_url}}" alt="item_img">
