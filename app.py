@@ -127,7 +127,7 @@ def login():
         flash("Invalid email or password. Please try again.", "danger")
     
 
-    return render_template('login.html')
+    return render_template('Login.html')
 
 
 
