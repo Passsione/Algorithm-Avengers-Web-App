@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 from flask_login import UserMixin
+from datetime import datetime
 from enum import Enum
 
 # Initialize SQLAlchemy
@@ -12,91 +12,105 @@ class ItemStatus(Enum):
     CLAIMED = 'claimed'
     AVAILABLE = 'available'
 
-
 class Student(db.Model, UserMixin):
     __tablename__ = 'student'
-    student_num = db.Column(db.String(8), primary_key=True)
+    student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_num = db.Column(db.String(8), unique=True, nullable=False)
     student_fname = db.Column(db.String(100), nullable=False)
     student_lname = db.Column(db.String(100), nullable=False)
+    points = db.Column(db.Integer, default=0) 
     student_email = db.Column(db.String(100), nullable=False, unique=True)
-    student_password = db.Column(db.String(100), nullable=False)
-    student_quali = db.Column(db.String(100), nullable=False)
+    student_password = db.Column(db.String(255), nullable=False)
 
+    # UserMixin already implements get_id, so no need for this
     def get_id(self):
-        return self.student_num
+        return self.student_id
+
+class Campus(db.Model):
+    __tablename__ = 'campus'
+    campus_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    campus_name = db.Column(db.String(100), nullable=False)
+    campus_block = db.Column(db.String(50), nullable=False)
 
 class Category(db.Model):
     __tablename__ = 'category'
-    category_id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     category_name = db.Column(db.String(50), nullable=False, unique=True)
-
-class Item(db.Model):
-    __tablename__ = 'item'
-    item_id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.String(100), nullable=False)
-    item_desc = db.Column(db.Text, nullable=False)
-    image_url = db.Column(db.String(255), nullable=True)
-    status = db.Column(db.Enum(ItemStatus), default=ItemStatus.FOUND, nullable=False)  # Use Enum
-    category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=True)
-    category = db.relationship('Category', backref=db.backref('items', lazy=True))
 
 class Report(db.Model):
     __tablename__ = 'report'
-    report_id = db.Column(db.Integer, primary_key=True)
-    student_num = db.Column(db.String(8), db.ForeignKey('student.student_num'), nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
-    location = db.Column(db.String(200), nullable=False)
-    campus = db.Column(db.String(100), nullable=False)
-    block = db.Column(db.String(100), nullable=False)
-    item_features = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    
+    report_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.student_id'), nullable=False)
+    campus_id = db.Column(db.Integer, db.ForeignKey('campus.campus_id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    img_url = db.Column(db.String(255)) 
+
     student = db.relationship('Student', backref=db.backref('reports', lazy=True))
-    item = db.relationship('Item', backref=db.backref('reports', lazy=True))
+    campus = db.relationship('Campus', backref=db.backref('reports', lazy=True))
 
-    @property
-    def item_name(self):
-        return self.item.item_name if self.item else None
-    
-class ClaimedItem(db.Model):
-    __tablename__ = 'claimed_items'
-    id = db.Column(db.Integer, primary_key=True)
-    student_num = db.Column(db.String(8), db.ForeignKey('student.student_num'), nullable=False)  # Corrected foreign key
+class Item(db.Model):
+    __tablename__ = 'item'
+    item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    item_name = db.Column(db.String(100), nullable=False)
+    item_desc = db.Column(db.Text, nullable=True)
+    image_url = db.Column(db.String(255), nullable=True)
+    status = db.Column(db.Enum(ItemStatus), default=ItemStatus.FOUND, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=True)
+    report_id = db.Column(db.Integer, db.ForeignKey('report.report_id'), nullable=True)
+
+    category = db.relationship('Category', backref=db.backref('items', lazy=True))
+    report = db.relationship('Report', backref=db.backref('items', lazy=True))
+
+    # Relationship to Campus via Report
+
+
+class ItemDescription(db.Model):
+    __tablename__ = 'item_description'
+    description_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
-    approval = db.Column(db.Boolean, default=False)
-    location = db.Column(db.String(200), nullable=False)
-    campus = db.Column(db.String(100), nullable=False)
-    block = db.Column(db.String(100), nullable=False)
-    item_features = db.Column(db.Text, nullable=True)
+    report_id = db.Column(db.Integer, db.ForeignKey('report.report_id'), nullable=False)
+    item_description = db.Column(db.Text, nullable=False)
 
-    # New fields for verification
-    campus_location = db.Column(db.String(100))  # Campus location (e.g., North Campus)
-    block_location = db.Column(db.String(100))   # Block location (e.g., Block A)
-    item_description = db.Column(db.String(500)) # Detailed item description
-    proof_file = db.Column(db.String(100))       # Proof file (image)
+    item = db.relationship('Item', backref=db.backref('descriptions', lazy=True))
+    report = db.relationship('Report', backref=db.backref('descriptions', lazy=True))
 
-    student = db.relationship('Student', backref=db.backref('claimed_items', lazy=True))
-    item = db.relationship('Item', backref=db.backref('claimed_items', lazy=True))
+class ClaimedItem(db.Model):
+    __tablename__ = 'claimed_item'
+    claim_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.student_id'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
+    description_id = db.Column(db.Integer, db.ForeignKey('item_description.description_id'), nullable=True)
+    campus_id = db.Column(db.Integer, db.ForeignKey('campus.campus_id'), nullable=False)
+    approval = db.Column(db.Boolean, default=False, nullable=False)
+    matching_score = db.Column(db.Float, nullable=True)  # Store the matching score between 0 and 10
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    student = db.relationship('Student', backref=db.backref('claimed_items', lazy=True, cascade='all, delete-orphan'))
+    item = db.relationship('Item', backref=db.backref('claimed_items', lazy=True, cascade='all, delete-orphan'))
+    description = db.relationship('ItemDescription', backref=db.backref('claimed_items', lazy=True, cascade='all, delete-orphan'))
+    campus = db.relationship('Campus', backref=db.backref('claimed_items', lazy=True))
+
 
 class Notification(db.Model):
     __tablename__ = 'notification'
-    notification_id = db.Column(db.Integer, primary_key=True)
-    user_type = db.Column(db.String(50), nullable=False)  # 'student' or 'admin'
-    user_id = db.Column(db.String(8), nullable=False)  # This would be student_num or admin identifier
-    message = db.Column(db.Text, nullable=False)
-    read = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Notification {self.message}>"
+
 
 class FoundItemReport(db.Model):
     __tablename__ = 'found_item_report'
-    report_id = db.Column(db.Integer, primary_key=True)
-    student_num = db.Column(db.String(8), db.ForeignKey('student.student_num'), nullable=False)
+    report_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.student_id'), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), nullable=False)
     location_found = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    status = db.Column(db.Enum(ItemStatus), default=ItemStatus.FOUND, nullable=False)  # Use Enum
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    status = db.Column(db.Enum(ItemStatus), default=ItemStatus.FOUND, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     student = db.relationship('Student', backref=db.backref('found_reports', lazy=True))
     item = db.relationship('Item', backref=db.backref('found_reports', lazy=True))
-
